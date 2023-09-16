@@ -3,6 +3,8 @@ import shutil
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
+from Configuration import Configuration
+
 
 class LifeIngest(FileSystemEventHandler):
 
@@ -36,14 +38,22 @@ def main(event_handler):
 
 
 if __name__ == "__main__":
+    configuration = Configuration()
+    source = configuration.get_source()
+    target = configuration.get_target()
+
+    print(source)
+    print(target)
+
+
     # It doesn't work with cloud (Google Drive) targets. What about NFS?
-    cloud_target = "C:\\Users\\octav\\OneDrive\\Desktop\\target"
-    gcloud_target = "G:\\My Drive\\test"
-    local_target = "C:\\Users\\octav\\Documents\\targetNotCloud"
+    # cloud_target = "C:\\Users\\octav\\OneDrive\\Desktop\\target"
+    # gcloud_target = "G:\\My Drive\\test"
+    # local_target = "C:\\Users\\octav\\Documents\\targetNotCloud"
+    #
+    # # Define the directory to monitor
+    # source_directory = "C:\\Users\\octav\\Documents\\TestMonitor"
+    # cloud_source = "C:\\Users\\octav\\OneDrive\\Desktop\\source"
 
-    # Define the directory to monitor
-    source_directory = "C:\\Users\\octav\\Documents\\TestMonitor"
-    cloud_source = "C:\\Users\\octav\\OneDrive\\Desktop\\source"
-
-    ingestion_handler = LifeIngest(cloud_source, local_target)
+    ingestion_handler = LifeIngest(source, target)
     main(ingestion_handler)
