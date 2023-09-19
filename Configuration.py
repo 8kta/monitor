@@ -7,6 +7,9 @@ class Configuration:
     def __init__(self):
         self._source = None
         self._target = None
+        self._owner = None
+        self._group = None
+        self._separator = None
         self._loaded = False
 
     def load(self):
@@ -17,6 +20,13 @@ class Configuration:
 
         self._source = config['directories']['source']
         self._target = config['directories']['target']
+        self._owner = config['permissions']['owner']
+        self._group = config['permissions']['group']
+
+        if config['OS']['os'] == 'unix':
+            self._separator = "/"
+        else:
+            self._separator = "\\"
 
         self._loaded = True
 
@@ -38,5 +48,17 @@ class Configuration:
     def get_target(self):
         self.singleton()
         return self._target
+
+    def get_owner(self):
+        self.singleton()
+        return self._owner
+
+    def get_group(self):
+        self.singleton()
+        return self._group
+
+    def get_separator(self):
+        self.singleton()
+        return self._separator
 
 
