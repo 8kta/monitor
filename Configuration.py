@@ -10,6 +10,7 @@ class Configuration:
         self._owner = None
         self._group = None
         self._separator = None
+        self._not_required = None
         self._loaded = False
 
     def load(self):
@@ -22,6 +23,7 @@ class Configuration:
         self._target = config['directories']['target']
         self._owner = config['permissions']['owner']
         self._group = config['permissions']['group']
+        self._not_required = config['filters']['not_required'].split(",")
 
         if config['OS']['os'] == 'unix':
             self._separator = "/"
@@ -60,5 +62,9 @@ class Configuration:
     def get_separator(self):
         self.singleton()
         return self._separator
+
+    def get_not_required(self):
+        self.singleton()
+        return self._not_required
 
 
